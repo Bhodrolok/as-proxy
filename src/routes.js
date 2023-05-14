@@ -10,44 +10,75 @@ const path = require('path');
 const { getDefaultAd, adTimeoutMs } = require('./defaults');
 const { isValidType } = require('./validators');
 
+/**
+ * @route:  $URL/
+ * @method: GET
+ * @desc: Display welcome page to notify that proxy server is live 
+ * @param: None
+ * @returns: Hello World text message
+ * @access: PUBLIC
+ */
+router.get('/', 
+    (req, res) => {
+        const msg = "Hello World! If you see this message, that means the proxy server is working!"
+        res.send(msg);
+    }
+);
 
+/**
+ * @route:  $URL/version
+ * @method: GET
+ * @desc: Display the current version of the proxy server
+ * @param: None
+ * @returns: Current version, shown as a text, from the version property outlined in package.json
+ * @access: PUBLIC
+ */
 router.get('/version', 
-    /**
-     * @param {express.Request} req - GET /version 
-     * @param {express.Response} res  Response: version from package.json
-     */
     (req, res) => {
         const { version } = require('../package.json');
         res.send(version);
     }
 );
 
+/**
+ * @route:  $URL/ledger
+ * @method: GET
+ * @desc: Display the current ledger log file
+ * @param: None
+ * @returns: Current ledger log file
+ * @access: PUBLIC
+ */
 router.get('/ledger', 
-    /**
-     * @param {express.Request} req - GET /ledger 
-     * @param {express.Response}} res - current ledger log file 
-     */
     (req, res) => {
         res.sendFile(path.resolve("activity.log"));
     }   
 );
 
+
+/**
+ * @route:  $URL/peers
+ * @method: GET
+ * @desc: Display the list of peers that are currently connected to this proxy's swarm
+ * @param: None
+ * @returns: Current peer list of ads
+ * @access: PUBLIC
+ */
 router.get('/peers', 
-    /**
-     * @param {express.Request} req - GET /peers
-     * @param {express.Response} res - Response: give the peer list of ids
-     */
     (req, res) => {
         const peerList = req.app.get('peers').getPeerList();
         res.send(peerList);
     }
 );
 
+/**
+ * @route:  $URL/ad
+ * @method: GET
+ * @desc: Display welcome page
+ * @param: None
+ * @returns: A single ad file of type: .png, .jpeg or .jpg from either its backup folder or from a connected peer in the swarm
+ * @access: PUBLIC
+ */
 router.get('/ad', 
-    /**
-     * @param {express.Request} req - GET /ad
-     * @param {express.Response} res - Response: a file containing advertisment
-     */
     (req, res) => {
 
         const io = req.app.get('io');   // main socketio server instance
