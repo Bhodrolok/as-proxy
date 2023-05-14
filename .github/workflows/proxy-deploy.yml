@@ -1,0 +1,49 @@
+name: Deploy Proxy Server
+run-name: ${{ github.actor }} is deploying AdShare Proxy to some provider(s)!
+
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  push:
+    tags:
+        - 'proxy-v**'
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps: 
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16.x'
+    
+      - name: Install proxy dependencies
+        run: npm install
+        working-directory: .
+    
+      - name: Test proxy
+        run: npm test
+        working-directory: .
+
+  deploy-on-render:
+    # Only deploy if the build&test job completes successfully
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install curl 
+        uses: sudo apt-get install -y curl
+
+      - name: Trigger Deploy to Render
+        # https://render.com/docs/deploy-hooks
+        env:
+          RENDER_DEPLOY_HOOK: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+        run: curl -X POST $RENDER_DEPLOY_HOOK
