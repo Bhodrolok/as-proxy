@@ -12,28 +12,13 @@ on:
 
 jobs:
 
-  build-and-test:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
-    
-      - name: Use Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '16.x'
-    
-      - name: Install proxy dependencies
-        run: npm install
-        working-directory: .
-    
-      - name: Test proxy
-        run: npm test
-        working-directory: .
+  proxy-tests:
+    # https://stackoverflow.com/a/71489231
+    uses: ./github/workflows/proxy-test.yml
 
   deploy-on-render:
-    # Only deploy if the build&test job completes successfully
-    needs: build-and-test
+    # Only deploy if the build and test job from the proxy-test workflow completes successfully
+    needs: proxy-tests
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
