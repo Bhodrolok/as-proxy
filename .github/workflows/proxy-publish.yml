@@ -43,6 +43,7 @@ jobs:
           tags: type=match,pattern=proxy-v(\d.\d.\d),group=1
           # similar to images: bgunson/as-proxy
           images: ${{ github.actor }}/${{ env.IMAGE_NAME }}
+          #images: bhodrolok/as-proxy
 
       # https://github.com/marketplace/actions/docker-login#github-container-registry
       - name: Sign in @ ${{ env.REGISTRY }}
