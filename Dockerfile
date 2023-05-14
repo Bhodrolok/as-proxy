@@ -1,4 +1,5 @@
 FROM node:16-alpine AS prod
+LABEL org.opencontainers.image.source="https://github.com/bhodrolok/as-proxy"
 
 WORKDIR /app
 
