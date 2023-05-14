@@ -19,7 +19,7 @@ env:
 jobs:
 
   proxy-tests:
-    uses: ./github/workflows/proxy-test.yml
+    uses: ./.github/workflows/proxy-test.yml
 
   publish-image-GHCR:
     # Only publish image if the build and test job from the proxy-test workflow completes successfully

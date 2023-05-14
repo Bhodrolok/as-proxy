@@ -14,7 +14,7 @@ jobs:
 
   proxy-tests:
     # https://stackoverflow.com/a/71489231
-    uses: ./github/workflows/proxy-test.yml
+    uses: ./.github/workflows/proxy-test.yml
 
   deploy-on-render:
     # Only deploy if the build and test job from the proxy-test workflow completes successfully
