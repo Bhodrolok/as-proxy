@@ -46,5 +46,6 @@ jobs:
           # https://render.com/docs/deploy-hooks
           RENDER_DEPLOY_HOOK: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
         with:
+          # wont work if the service is suspended... (409 error)
           args: -X POST $RENDER_DEPLOY_HOOK
         #run: curl -X POST $RENDER_DEPLOY_HOOK
