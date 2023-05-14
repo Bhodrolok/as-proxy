@@ -46,6 +46,7 @@ jobs:
         uses: docker/metadata-action@v4
         with:
           flavor: latest=auto
+          # match the tag image with regex pattern; expected tag format = proxy-va.b.c
           tags: type=match,pattern=proxy-v(\d.\d.\d),group=1
           # similar to images: bgunson/as-proxy
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
@@ -56,7 +57,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: .
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: ${{ steps.meta.outputs.tags }}, latest
           labels: ${{ steps.meta.outputs.labels }}
           file: Dockerfile
           push: true
