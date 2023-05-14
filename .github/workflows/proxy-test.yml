@@ -3,20 +3,6 @@ run-name: ${{ github.actor }} is testing out AdShare Proxy servers to check if t
 # Run testing workflow on each commit(s) push to repo
 on:
   push
-
-env:
-  # Setup envvars for running tests
-  NODE_ENV: test
-  TEST_NAME: "Default .rc File Path Test"
-  ENVVAR: exists
-  ENV_PATH: ./.env-cmdrc
-  PEER_PORT: 69696
-  SERVER_URL: http://localhost:3000
-  SERVER_URL_BACKUP_1: http://localhost:5000
-  SERVER_URL_BACKUP_2: http://aspxy3.bhodrolok.xyz
-  CONN_TIMEOUT: 5000
-  NUM_RETRIES: 1
-  RETRY_INTERVAL_MS: 1234
   
 jobs: 
   test-proxy:
@@ -32,8 +18,8 @@ jobs:
     
     - name: Install proxy dependencies
       run: npm install
-      working-directory: ./proxy
+      working-directory: .
     
     - name: Test proxy
       run: npm test
-      working-directory: ./proxy
+      working-directory: .
