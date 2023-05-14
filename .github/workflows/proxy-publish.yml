@@ -29,8 +29,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
       
-      - name: Setup Docker buildx
-        uses: docker/setup-buildx-action@v2
+      # Commented out cuz: buildx failed with: ERROR: failed to solve: failed to push latest: failed to authorize: failed to fetch oauth token: unexpected status: 401 Unauthorized
+      #- name: Setup Docker buildx
+      #  uses: docker/setup-buildx-action@v2
 
       # https://github.com/marketplace/actions/docker-login#github-container-registry
       - name: Sign in @ ${{ env.REGISTRY }}
@@ -51,7 +52,7 @@ jobs:
           # similar to images: bgunson/as-proxy
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
-      # Build + Push image with Buildx
+      # Build + Push the Proxy image
       - name: Build and push Docker image
         id: build-and-push
         uses: docker/build-push-action@v4
