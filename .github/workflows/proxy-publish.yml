@@ -46,7 +46,7 @@ jobs:
         uses: docker/metadata-action@v4
         with:
           flavor: latest=auto
-          tags: type=match,pattern=proxy/v(\d.\d.\d),group=1
+          tags: type=match,pattern=proxy-v(\d.\d.\d),group=1
           # similar to images: bgunson/as-proxy
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
