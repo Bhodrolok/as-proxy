@@ -2,12 +2,10 @@ name: AdShare Proxy server testing
 run-name: ${{ github.actor }} is testing AdShare Proxy servers to check if they are not breaking!
 # Run testing workflow on each commit(s) push to repo
 on:
-  workflow_call:
-    types: 
-      - push
-      
+  push:
   workflow_dispatch:
-  
+  workflow_call:
+
 jobs: 
   test-proxy:
     runs-on: ubuntu-latest
